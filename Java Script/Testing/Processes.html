@@ -18,14 +18,16 @@
         <div>
             <p id="errors"></p>
             <p id="answer"></p> 
-            <p id="testing"></p> 
+            <ul id="testing"></ul> 
+            <ul id="testing1"></ul>
+            <p id= "test2"></p>
 
         </div>
 
         <script>
             
             var processes = [];
-            var numberOfProcesses ; 
+            var numberOfProcesses; 
             function inputNum(){
                 numberOfProcesses = parseInt(document.getElementById("num").value,10);
                 
@@ -65,17 +67,43 @@
                         minVal = processList[p][2];
                         minindex = p;
                     }
-                } 
-                document.getElementById("testing").innerText = processList[minindex];
+                }
+                //var item1 = createTodoItem(processList[minindex]);
+                //attachTodoItem(item1);
+                //document.getElementById("test2").innerText = processList.splice(minindex,1);
+                return processList.splice(minindex,1);
             }
 
             function submission(){
                 document.getElementById("errors").innerText = "good";
 
-                nextSJ(processes,0);
+                var timeIndex = 0;
+                while(processes.length > 0 ){
+                    var shortestJob = nextSJ(processes,timeIndex);
+                    var cat = shortestJob.join() + " executes at second " + timeIndex.toString();
+                    document.getElementById("errors").innerText = "good1";
+                    //document.getElementById("testing").appendChild(cat.toString());
+                    //var item = createTodoItem(cat);
+                    //attachTodoItem(item);
+                    timeIndex += shortestJob[2];
+                    document.getElementById("errors").innerText = "good2";
+                }
+
+                //nextSJ(processes,0);
                 //nextSJ(processes,4);
                 
             }
+
+            function createTodoItem(value) {
+                    var item = document.createElement('li');
+                    item.innerText = value;
+                    return item;
+                }
+
+                function attachTodoItem(item) {
+                    var ulElement = document.getElementById('testing');
+                    ulElement.appendChild(item);
+                }
 
         </script>
         
