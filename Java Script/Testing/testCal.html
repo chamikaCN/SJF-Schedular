@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>testing 1</title>
+<h1>Calculator</h1>
+</head>
+<body>
+    <form name="Inputform">
+        First number<input type="number" id="firstnum" value="6"/>
+        Second number<input type="number" id= "secondnum" value="0"/>
+        <button type= "button" id="button1" onclick="adding()">add<br/></button>
+        <button type= "button" id="button2" onclick="getAns(document.getElementById('firstnum').value,document.getElementById('secondnum').value)">substract<br/></button>
+        <button type= "button" id="button3" onclick="multiplying()">multiply</button>
+
+        <p id="answer"></p> 
+        <div id="ans"></div>
+    </form>
+<script>
+      //document.write(num1);
+        function getAns(n1,n2){
+            document.getElementById('answer').innerText = substracting(n1,n2);
+        }  
+
+        function substracting(n1,n2){
+            var num1 = parseInt(n1);
+            var num2 = parseInt(n2);
+            return num1+ " - " +num2+ " is " +(num1-num2);
+        }
+
+        function adding(){
+            var num1 = parseInt(document.getElementById("firstnum").value);
+            //document.write(typeof(num1));
+            var num2 = parseInt(document.getElementById("secondnum").value);
+            //document.write(typeof(num2));
+            //answer = document.getElementById("answer");
+            // //var ans = num1 - num2;
+            // answer.innerHTML = "djwedjwhedjhd" + (num1-num2);
+            // answer.write("345");
+            document.getElementById("ans").innerHTML = (num1+ " + " +num2+ " is " +(num1+num2));
+        }
+
+        function multiplying(){
+            var num1 = parseInt(document.getElementById("firstnum").value);
+            //document.write(typeof(num1));
+            var num2 = parseInt(document.getElementById("secondnum").value);
+            //document.write(typeof(num2));
+            //answer = document.getElementById("answer");
+            // //var ans = num1 - num2;
+            // answer.innerHTML = "djwedjwhedjhd" + (num1-num2);
+            // answer.write("345");
+            document.getElementById("answer").innerText = (num1+ " x " +num2+ " is " +(num1*num2));
+        }
+    
+</script>
+</body>
+</html>
