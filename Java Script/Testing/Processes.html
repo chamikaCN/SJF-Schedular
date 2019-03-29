@@ -40,6 +40,7 @@
                     processes.push([(document.getElementById("ProName").value).toString(),parseInt(document.getElementById("SubTime")
                     .value,10),parseInt(document.getElementById("BurstTime").value,10)]);
                     document.getElementById("answer").innerText = processes.join() ;
+                    document.getElementById("errors").innerText = processes.length;
                 }else{
                     document.getElementById("Addbutton").disabled = true;
                 }
@@ -54,6 +55,8 @@
                     console.log(processes);
                     document.getElementById("Addbutton").disabled = false;
                     document.getElementById("answer").innerText = processes.join() ;
+                    document.getElementById("errors").innerText = processes.length;
+
 
                 }
             }
@@ -62,14 +65,14 @@
                 var minPro;
                 var minVal = 10000000;
                 //processList.forEach(p => {
-                for (var p = 0; p <processList.length;p++){
+                for (var p = 0; p <processList.length ;p++){
                     if ((processList[p][2] < minVal) && (time >= processList[p][1])){
                         minVal = processList[p][2];
                         minindex = p;
                     }
                 }
-                //var item1 = createTodoItem(processList[minindex]);
-                //attachTodoItem(item1);
+                var item1 = createTodoItem(processList[minindex]);
+                attachTodoItem(item1);
                 //document.getElementById("test2").innerText = processList.splice(minindex,1);
                 return processList.splice(minindex,1);
             }
@@ -79,13 +82,15 @@
 
                 var timeIndex = 0;
                 while(processes.length > 0 ){
+                    document.getElementById("errors").innerText = "good0.5";
+
                     var shortestJob = nextSJ(processes,timeIndex);
                     var cat = shortestJob.join() + " executes at second " + timeIndex.toString();
                     document.getElementById("errors").innerText = "good1";
                     //document.getElementById("testing").appendChild(cat.toString());
-                    //var item = createTodoItem(cat);
-                    //attachTodoItem(item);
-                    timeIndex += shortestJob[2];
+                    var item = createTodoItem(cat);
+                    attachTodoItem(item);
+                    timeIndex += shortestJob[0][2];
                     document.getElementById("errors").innerText = "good2";
                 }
 
