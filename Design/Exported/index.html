@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Scheduler</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap1.min.css">
+    <link rel="stylesheet" href="User.css">
+</head>
+
+<body>
+    <h1> Scheduler Project 1.0 </h1>
+    <div>
+        Number of processes <input type="number" class="input" id="input_NoProcess" min="1">
+        <button class="btn btn-primary" type="button" id="button_OK"> OK </button><br/><br/>
+        <input type="text" class="input" id="input_ProName" placeholder="Process Name">
+        <input type="number" class="input" id="input_ProSubTime" placeholder="Submission Time">
+        <input type="number" class="input" id="input_ProBurstTime" placeholder="Burst Time"><br/>
+        Choose a colour <input type="color" class="input" id="input_ProColor"><br/><br/>
+        <div class="btn-group" role="group" id="buttonGroup_Process">
+            <button class="btn btn-primary" type="button" id="button_Add"> ADD </button>
+            <button class="btn btn-primary" type="button" id="button_Delete"> Delete Last Entry </button>
+        </div>
+    </div><br/>
+    <div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th> - Process Name - </th>
+                        <th> - Submission Time - </th>
+                        <th> - Burst Time - </th>
+                        <th> - Colour - </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr>
+                        <td>Cell 1</td>
+                        <td>Cell 2</td>
+                    </tr>
+                    <tr>
+                        <td>Cell 3</td>
+                        <td>Cell 4</td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Label</label></div><button class="btn btn-primary" type="button">Button</button>
+    <div>
+        <ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+            <li>Item 4</li>
+        </ul>
+    </div>
+    <div></div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
