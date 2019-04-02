@@ -64,7 +64,7 @@
     </div>
     <div></div>
     <script src="assets/js/jquery.min.js"></script>
-    <script src="Process.js"></script>
+    <!-- <script src="Process.js"></script> -->
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
     <script>
@@ -80,16 +80,13 @@
             function addToArray(){
                 
                 if (processes.length < numberOfProcesses){
-                    //document.getElementById("para_errorLog").innerText = "good" ;
-                    //var Process = [(document.getElementById("input_ProName").value).toString(),parseInt(document.getElementById("input_ProSubTime")
-                    //.value,10),parseInt(document.getElementById("input_ProBurstTime").value,10),(document.getElementById("input_ProColor").value).toString()];
-                    var processName = (document.getElementById("input_ProName").value).toString();
-                    var Process = new Process(processName,(document.getElementById("input_ProName").value).toString(),parseInt(document.getElementById("input_ProSubTime")
-                    .value,10),parseInt(document.getElementById("input_ProBurstTime").value,10),(document.getElementById("input_ProColor").value).toString());
+                    document.getElementById("para_errorLog").innerText = "good" ;
+                    var Process = [(document.getElementById("input_ProName").value).toString(),parseInt(document.getElementById("input_ProSubTime")
+                    .value,10),parseInt(document.getElementById("input_ProBurstTime").value,10),(document.getElementById("input_ProColor").value).toString()];
                     processes.push(Process);
-                    document.getElementById("para_errorLog").innerText = Process.Name.toString() ;
-                    //var processRow = createTableRow(Process);
-                    //attachTableRow(processRow);
+                    document.getElementById("para_errorLog").innerText = processes.length ;
+                    var processRow = createTableRow(Process);
+                    attachTableRow(processRow);
                     //document.getElementById("errors").innerText = processes.length;
                 }else{
                     //document.getElementById("para_errorLog").innerText = "Process Full";
