@@ -25,7 +25,7 @@
     </div><br/>
     <div>
         <div class="table-responsive">
-            <table class="table">
+            <table class="table" id="table_Process">
                 <thead>
                     <tr>
                         <th> - Process Name - </th>
@@ -34,7 +34,7 @@
                         <th> - Colour - </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableBody_Process">
                     <!-- <tr>
                         <td>Cell 1</td>
                         <td>Cell 2</td>
@@ -46,9 +46,13 @@
                 </tbody>
             </table>
         </div>
+
+        Pre-emptive<input class="form-check-input" type="checkbox" id="input_PreemptCheck">
+        <button class="btn btn-primary" type="button"> Calculate </button>
     </div>
-    <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Label</label></div><button class="btn btn-primary" type="button">Button</button>
+    
     <div>
+        <h3> Order of execution </h3>
         <ul>
             <li>Item 1</li>
             <li>Item 2</li>

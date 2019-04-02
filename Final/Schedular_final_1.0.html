@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Scheduler</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap1.min.css">
+    <link rel="stylesheet" href="User.css">
+    <script rel="text/javascript" href="Process.js"></script>
+</head>
+
+<body>
+    <h1> Scheduler Project 1.0 </h1>
+    <div>
+        Number of processes <input type="number" class="input" id="input_NoProcess" min="1">
+        <button class="btn btn-primary" type="button" id="button_OK" onclick="inputNum()"> OK </button><br/><br/>
+        <input type="text" class="input" id="input_ProName" placeholder="Process Name">
+        <input type="number" class="input" id="input_ProSubTime" placeholder="Submission Time">
+        <input type="number" class="input" id="input_ProBurstTime" placeholder="Burst Time"><br/>
+        Choose a colour <input type="color" class="input" id="input_ProColor"><br/><br/>
+        <div class="btn-group" role="group" id="buttonGroup_Process">
+            <button class="btn btn-primary" type="button" id="button_Add" onclick="addToArray()"> ADD </button>
+            <button class="btn btn-primary" type="button" id="button_Delete" onclick="deleteFromArray()"> Delete Last Entry </button>
+            <br/><p id="para_errorLog"></p>
+        </div>
+    </div><br/>
+    <div>
+        <div class="table-responsive">
+            <table class="table" id="table_Process">
+                <thead>
+                    <tr>
+                        <th> - Process Name - </th>
+                        <th> - Submission Time - </th>
+                        <th> - Burst Time - </th>
+                        <th> - Colour - </th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody_Process">
+                    <!-- <tr>
+                        <td>Cell 1</td>
+                        <td>Cell 2</td>
+                    </tr>
+                    <tr>
+                        <td>Cell 3</td>
+                        <td>Cell 4</td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+
+        Pre-emptive<input class="form-check-input" type="checkbox" id="input_PreemptCheck">
+        <button class="btn btn-primary" type="button" onclick="submission()"> Calculate </button>
+    </div>
+    
+    <div>
+        <h3> Order of execution </h3>
+        <ul id="list_execution">
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+            <li>Item 4</li>
+        </ul>
+    </div>
+    <div></div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+    <script>
+            
+            var processes = [];
+            var numberOfProcesses; 
+
+            function inputNum(){
+                numberOfProcesses = parseInt(document.getElementById("input_NoProcess").value,10);
+                document.getElementById("para_errorLog").innerText = numberOfProcesses;
+            }
+        
+            function addToArray(){
+                
+                if (processes.length < numberOfProcesses){
+                    document.getElementById("para_errorLog").innerText = "good" ;
+                    var Process = [(document.getElementById("input_ProName").value).toString(),parseInt(document.getElementById("input_ProSubTime")
+                    .value,10),parseInt(document.getElementById("input_ProBurstTime").value,10),(document.getElementById("input_ProColor").value).toString()];
+                    processes.push(Process);
+                    document.getElementById("para_errorLog").innerText = processes.join() ;
+                    var processRow = createTableRow(Process);
+                    attachTableRow(processRow);
+                    //document.getElementById("errors").innerText = processes.length;
+                }else{
+                    //document.getElementById("para_errorLog").innerText = "Process Full";
+                    alert("Process Full");
+                    document.getElementById("button_Add").disabled = true;
+                }
+            }
+
+            function deleteFromArray(){
+
+                if (processes.length == 0){
+                    document.getElementById("para_errorLog").innerText = "No processes to Delete";
+                }else{
+                    processes.pop();
+                    console.log(processes);
+                    document.getElementById("button_Add").disabled = false;
+                    document.getElementById("para_errorLog").innerText = processes.join() ;
+                    //document.getElementById("errors").innerText = processes.length;
+                }
+            }
+
+            function nextSJ(processList,time){
+                var minPro;
+                var minVal = 10000000;
+                for (var p = 0; p <processList.length ;p++){
+                    if ((processList[p][2] < minVal) && (time >= processList[p][1])){
+                        minVal = processList[p][2];
+                        minindex = p;
+                    }
+                }
+                var item1 = createTodoItem(processList[minindex]);
+                attachTodoItem(item1);
+                return processList.splice(minindex,1);
+            }
+
+            function submission(){
+                //document.getElementById("errors").innerText = "good";
+
+                var timeIndex = 0;
+                while(processes.length > 0 ){
+                    //document.getElementById("errors").innerText = "good0.5";
+
+                    var shortestJob = nextSJ(processes,timeIndex);
+                    var cat = shortestJob.join() + " executes at second " + timeIndex.toString();
+                    //document.getElementById("errors").innerText = "good1";
+                    //document.getElementById("testing").appendChild(cat.toString());
+                    var item = createTodoItem(cat);
+                    attachTodoItem(item);
+                    timeIndex += shortestJob[0][2];
+                    //document.getElementById("errors").innerText = "good2";
+                }  
+            }
+
+            function createTodoItem(value) {
+                    var item = document.createElement('li');
+                    item.innerText = value;
+                    return item;
+            }
+
+            function attachTodoItem(item) {
+                    var ulElement = document.getElementById('list_execution');
+                    ulElement.appendChild(item);
+            }
+
+            function createTableRow(Process) {
+                var row = document.createElement('tr');
+                for (var k=0 ; k<5 ; k++){
+                    if(k<3){
+                        var cell = document.createElement('td');
+                        cell.innerText = Process[k];
+                    } else if(k==3){
+                        var cell = document.createElement('td');
+                        cell.bgColor = Process[3].toString();
+                    } else if(k==4){
+                        var button_del = document.createElement('button');
+                        // button_del.onclick = deleteRow(this);
+                        //button_del.onclick = function(this){
+                        //    document.getElementById('para_errorLog').innerHTML = "goog";
+                        //}
+                        button_del.id = "buttoni";
+                        button_del.innerText = "delete Row";
+                        var cell = document.createElement('td');
+                        cell.appendChild(button_del);
+                    }
+                    row.appendChild(cell);
+                }
+                return row;
+            }
+
+            function attachTableRow(row){
+                var tableBody = document.getElementById('tableBody_Process');
+                tableBody.appendChild(row);
+            }
+
+            function deleteRow(button){
+                document.getElementById('para_errorLog').innerHTML = "goog";
+
+            }
+
+        </script>
+
+</body>
+
+</html>
