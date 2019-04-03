@@ -19,11 +19,11 @@
         <input type="number" class="input" id="input_ProSubTime" placeholder="Submission Time">
         <input type="number" class="input" id="input_ProBurstTime" placeholder="Burst Time"><br/>
         Choose a colour <input type="color" class="input" id="input_ProColor"><br/><br/>
-        <div class="btn-group" role="group" id="buttonGroup_Process">
-            <button class="btn btn-primary" type="button" id="button_Add" onclick="addToArray()"> ADD </button>
-            <button class="btn btn-primary" type="button" id="button_Delete" onclick="deleteFromArray()"> Delete Last Entry </button>
+        <!-- <div class="btn-group" role="group" id="buttonGroup_Process"> -->
+            <button class="btn btn-primary" type="button" id="button_Add" disabled="true" onclick="addToArray()"> ADD </button>
+            <!-- <button class="btn btn-primary" type="button" id="button_Delete" onclick="deleteFromArray()"> Delete Last Entry </button> -->
             <br/><p id="para_errorLog"></p>
-        </div>
+        <!-- </div> -->
     </div><br/>
     <div>
         <div class="table-responsive">
@@ -51,7 +51,7 @@
 
         Pre-emptive<input class="form-check-input" type="checkbox" id="input_PreemptCheck">
         <!-- <button class="btn btn-primary" type="button" onclick="nonPreSubmission()"> Calculate </button> -->
-        <button class="btn btn-primary" type="button" onclick="submission()"> Calculate </button>
+        <button class="btn btn-primary" type="button" onclick="test()"> Calculate </button>
     </div>
     
     <div>
@@ -67,7 +67,8 @@
     <script src="assets/js/jquery.min.js"></script>
     <script src="Process.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="MainAlgorithm.js"></script>
+    <!-- <script src="MainAlgorithm.js"></script> -->
+    <script src="Algorithm.js"></script>
 
 </body>
 

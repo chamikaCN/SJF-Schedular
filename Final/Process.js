@@ -7,16 +7,10 @@ class Process {
         this.ProcessColor = Color;
     }
 
-    get Name() {
-        return this.ProcessName;
+    calculateTime(StartTime){
+        this.WaitingTime = StartTime - SubmissionTime;
+        this.TurnAroundTime = WaitingTime + BurstTime;
     }
-    get SubTime() {
-        return this.SubmissionTime;
-    }
-    get BurTime() {
-        return this.BurstTime;
-    }
-    get ProcessColor() {
-        return this.ProcessColor;
-    }
+
+
 }
