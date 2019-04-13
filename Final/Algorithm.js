@@ -22,6 +22,10 @@ function addToArray() {
         //alert("Process Full");
         document.getElementById("button_Add").disabled = true;
     }
+    for(var yv = 0 ; yv<processes.length;yv++){
+        console.log(typeof(processes[yv]));
+    }
+    
 }
 
 function createListItem(value) {
@@ -77,54 +81,92 @@ function attachTableRow(row) {
     }
 }*/
 
-function getAvailabeProcesses(processList,time){
+function getAvailabeProcesses(processList, time) {
     currentAvailable = [];
     for (var p = 0; p < processList.length; p++) {
-        if(time >= processList[p].SubmissionTime){
-            currentAvailable.push(processList[p]);
+        if (time >= processList[p].SubmissionTime) {
+            var pro = processList.splice(p, 1);
+            currentAvailable.push(pro[0]);
+            //WOW what a mistake
+            p = p - 1;
         }
     }
     return currentAvailable;
+    //array of process objects which are available at given time
 }
 
-function findIdleProcesses(processList,time){
-    var iterations = 1;
-    while(getAvailabeProcesses(processList,time+iterations).length == 0){
-        iterations += 1;
-    }
-    return iterations;
-}
-
-function test(){
-    var newq = nextSJ(processes,0);
-    console.log(newq);
-    
-}
+// function findIdleProcesses(processList,time){
+//     var iterations = 1;
+//     //logArray(processList);
+//     while(getAvailabeProcesses(processList,time+iterations).length == 0){
+//         iterations += 1;
+//     }
+//     return iterations;
+// }
 
 function nextSJ(processList, time) {
-    
-    var minPro;
+    var minindex;
     var minVal = 10000000;
-    var available = getAvailabeProcesses(processList,time);
-    for (var u =0; u< available.length;u++){
-        //console.log(available[u].ProcessName);
-    }
-
+    var available = getAvailabeProcesses(processList, time);
+    console.log(available.length);
     if (available.length > 0) {
         for (var p = 0; p < available.length; p++) {
             if (available[p].BurstTime < minVal) {
                 minVal = available[p].BurstTime;
                 minindex = p;
             }
-            var item1 = createListItem(available[minindex]);
-            attachListItem(item1);
-            return available.splice(minindex, 1);
         }
+            //var item1 = createListItem(available[minindex]);
+            //attachListItem(item1);
+            var SJ = available.splice(minindex, 1);
+            //method to add available array to processes array
+            console.log(processList);
+            console.log(processes);
+            console.log(available);
+            processList.concat(available);
+            console.log(processList);
+            return SJ[0];
+        
     } else {
-        var newIdle = findIdleProcesses(processList,time);
-        var item1 = createListItem(new Process("IDLE", time, newIdle, "#999999"));
-        attachListItem(item1);
-        return ["IDLE", time, newIdle, "#999999"];
+        var newIdleTime = findIdleProcesses(processList, time);
+        var newProcess = new Process("IDLE", time, newIdleTime, "#999999");
+        //var item1 = createListItem(newProcess);
+        //attachListItem(item1);
+        return newProcess;
     }
-    
+
+}
+
+// function Submission() {
+//     var timeIndex = 0;
+//     while (processes.length > 0) {
+//         var shortestJob = nextSJ(processes, timeIndex);
+//         var cat = shortestJob.ProcessName + " executes at second " + timeIndex.toString();
+//         console.log(cat);
+//         // var item = createTodoItem(cat);
+//         // attachTodoItem(item);
+//         timeIndex += shortestJob.BurstTime;
+//     }
+// }
+
+// function logArray(array){
+//     //console.log(array.toString);
+//     for(var x = 0; x<array.length;x++){
+//         console.log("***"+array[x].ProcessName);
+//     };
+// }
+
+function testing(){
+    // for(var y = 0 ; y<processes.length;y++){
+    //     console.log(typeof(processes[y]));
+    // }
+    var a = nextSJ(processes,3);
+    // for(var yi = 0 ; yi< a.length;yi++){
+    //     console.log("typeis "+typeof(a[yi]));}
+     
+    console.log(a);
+    console.log("ewr  "+a.ProcessName);
+    //console.log("rgt  "+a[1].ProcessName);
+    // console.log("ewrgt  "+a[0][0].ProcessName);
+    // console.log("ewrgt  "+a[1][0].ProcessName);
 }
