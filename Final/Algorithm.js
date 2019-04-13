@@ -28,9 +28,9 @@ function addToArray() {
     
 }
 
-function createListItem(value) {
+function createListItem(value,t) {
     var item = document.createElement('li');
-    item.innerText = value.ProcessName + " is executed at ";
+    item.innerText = value.ProcessName + " is executed at "+ t.toString();
     return item;
 }
 
@@ -95,14 +95,23 @@ function getAvailabeProcesses(processList, time) {
     //array of process objects which are available at given time
 }
 
-// function findIdleProcesses(processList,time){
-//     var iterations = 1;
-//     //logArray(processList);
-//     while(getAvailabeProcesses(processList,time+iterations).length == 0){
-//         iterations += 1;
-//     }
-//     return iterations;
-// }
+function countAvailableProcesses(processList, time) {
+    var count = 0;
+    for (var q = 0; q < processList.length; q++) {
+        if (time >= processList[q].SubmissionTime) {
+            count += 1;
+        }
+    }
+    return count;
+}
+
+function createIdleProcesses(processList,time){
+    var iterations = 1;
+    while(countAvailableProcesses(processList,time+iterations) == 0){
+        iterations += 1;
+    }
+    return iterations;
+}
 
 function nextSJ(processList, time) {
     var minindex;
@@ -116,38 +125,32 @@ function nextSJ(processList, time) {
                 minindex = p;
             }
         }
-            //var item1 = createListItem(available[minindex]);
-            //attachListItem(item1);
-            var SJ = available.splice(minindex, 1);
-            //method to add available array to processes array
-            console.log(processList);
-            console.log(processes);
-            console.log(available);
-            processList.concat(available);
-            console.log(processList);
-            return SJ[0];
-        
+        var SJ = available.splice(minindex, 1);
+        //method to add available array to processes array
+        for (var z = 0; z < available.length; z++) {
+            processList.push(available[z]);
+        }
+        return SJ[0];
+
     } else {
-        var newIdleTime = findIdleProcesses(processList, time);
+        var newIdleTime = createIdleProcesses(processList, time);
         var newProcess = new Process("IDLE", time, newIdleTime, "#999999");
-        //var item1 = createListItem(newProcess);
-        //attachListItem(item1);
         return newProcess;
     }
 
 }
 
-// function Submission() {
-//     var timeIndex = 0;
-//     while (processes.length > 0) {
-//         var shortestJob = nextSJ(processes, timeIndex);
-//         var cat = shortestJob.ProcessName + " executes at second " + timeIndex.toString();
-//         console.log(cat);
-//         // var item = createTodoItem(cat);
-//         // attachTodoItem(item);
-//         timeIndex += shortestJob.BurstTime;
-//     }
-// }
+function Submission() {
+    var timeIndex = 0;
+    while (processes.length > 0) {
+        var shortestJob = nextSJ(processes, timeIndex);
+        var Listitem = createListItem(shortestJob,timeIndex);
+        attachListItem(Listitem);
+        var cat = shortestJob.ProcessName + " executes at second " + timeIndex.toString();
+        console.log(cat);
+        timeIndex += shortestJob.BurstTime;
+    }
+}
 
 // function logArray(array){
 //     //console.log(array.toString);
