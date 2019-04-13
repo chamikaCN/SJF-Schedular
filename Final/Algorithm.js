@@ -24,6 +24,17 @@ function addToArray() {
     }
 }
 
+function createListItem(value) {
+    var item = document.createElement('li');
+    item.innerText = value.ProcessName + " is executed at ";
+    return item;
+}
+
+function attachListItem(item) {
+    var ulElement = document.getElementById('list_execution');
+    ulElement.appendChild(item);
+}
+
 function createTableRow(Process) {
     params = ['ProcessName','SubmissionTime','BurstTime','ProcessColor'];
     var row = document.createElement('tr');
@@ -76,17 +87,27 @@ function getAvailabeProcesses(processList,time){
     return currentAvailable;
 }
 
+function findIdleProcesses(processList,time){
+    var iterations = 1;
+    while(getAvailabeProcesses(processList,time+iterations).length == 0){
+        iterations += 1;
+    }
+    return iterations;
+}
+
 function test(){
-    nextSJ(processes,5);
+    var newq = nextSJ(processes,0);
+    console.log(newq);
+    
 }
 
 function nextSJ(processList, time) {
+    
     var minPro;
     var minVal = 10000000;
-
-    var available = getAvailabeProcesses(processList,5);
+    var available = getAvailabeProcesses(processList,time);
     for (var u =0; u< available.length;u++){
-        console.log(available[u].ProcessName);
+        //console.log(available[u].ProcessName);
     }
 
     if (available.length > 0) {
@@ -95,17 +116,15 @@ function nextSJ(processList, time) {
                 minVal = available[p].BurstTime;
                 minindex = p;
             }
-            var item1 = createTodoItem(available[minindex]);
-            attachTodoItem(item1);
+            var item1 = createListItem(available[minindex]);
+            attachListItem(item1);
             return available.splice(minindex, 1);
         }
-    //     
-    // } else {
-    //     
-    //         
-    console.log('came');
-    //     var item1 = createTodoItem(["IDLE", time, 1, "#999999"]);
-    //     attachTodoItem(item1);
-    //     return ["IDLE", time, 1, "#999999"];
-    // }
+    } else {
+        var newIdle = findIdleProcesses(processList,time);
+        var item1 = createListItem(new Process("IDLE", time, newIdle, "#999999"));
+        attachListItem(item1);
+        return ["IDLE", time, newIdle, "#999999"];
+    }
+    
 }
