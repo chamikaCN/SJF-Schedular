@@ -7,9 +7,9 @@
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"> 
         <link rel="stylesheet" href="User.css"> 
     </head>     
-    <body style="display:grid;grid-template-columns:5% 1fr 1fr 5%;grid-template-rows:30px 100px 250px auto 10%;grid-template-areas:'. . . .' '. header header .' '. inputs table .' '. result result .' '. . . .';grid-gap:10px;"> 
-        <h1 style="grid-area:2 / 2 / 3 / 4;">Scheduler Project 1.0 </h1> 
-        <div style="grid-area:3 / 2 / 4 / 3;"> 
+    <body> 
+        <h1>Scheduler Project 1.0 </h1> 
+        <div> 
             Number of processes 
             <input type="number" class="input" id="input_NoProcess" min="1"> 
             <button class="btn btn-primary" type="button" id="button_OK" onclick="inputNum()"> OK </button>             
@@ -31,7 +31,8 @@
             <p id="para_errorLog"></p> 
             <!-- </div> -->             
         </div>         
-        <div style="grid-area:3 / 3 / 4 / 4;"> 
+        <br/> 
+        <div> 
             <div class="table-responsive"> 
                 <table class="table" id="table_Process"> 
                     <thead> 
@@ -48,7 +49,7 @@
             </div>             
             <button class="btn btn-primary" type="button" onclick="Submission()"> Calculate </button>             
         </div>         
-        <div id="div_exeList" style="grid-area:4 / 2 / 5 / 4;"> 
+        <div id="div_exeList"> 
             <h3> Order of execution </h3> 
             <ul id="list_execution"> 
 </ul>             

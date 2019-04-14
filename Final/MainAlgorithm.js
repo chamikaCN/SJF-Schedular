@@ -10,17 +10,17 @@ function addToArray() {
 
     if (processes.length < numberOfProcesses) {
 
-        //const processone = new Process("123", "123", "123", "#123456");
+        var processone = new Process("123", "123", "123", "#123456");
 
         document.getElementById("para_errorLog").innerText = "good";
-        var Process = [(document.getElementById("input_ProName").value).toString(), parseInt(document.getElementById("input_ProSubTime")
+        var ProcessA = [(document.getElementById("input_ProName").value).toString(), parseInt(document.getElementById("input_ProSubTime")
             .value, 10), parseInt(document.getElementById("input_ProBurstTime").value, 10), (document.getElementById("input_ProColor").value).toString()];
         var processName = (document.getElementById("input_ProName").value).toString();
         //var Process = new Process(processName,(document.getElementById("input_ProName").value).toString(),parseInt(document.getElementById("input_ProSubTime")
         //.value,10),parseInt(document.getElementById("input_ProBurstTime").value,10),(document.getElementById("input_ProColor").value).toString());
-        processes.push(Process);
+        processes.push(ProcessA);
         //document.getElementById("para_errorLog").innerText = Process.Name.toString() ;
-        var processRow = createTableRow(Process);
+        var processRow = createTableRow(ProcessA);
         attachTableRow(processRow);
         //document.getElementById("errors").innerText = processes.length;
     } else {
@@ -54,21 +54,23 @@ function nextSJ(processList, time) {
         }
     }
 
+    console.log(currentAvailable.join());
+
     if (currentAvailable.length == 0) {
         console.log('came');
         var item1 = createTodoItem(["IDLE", time, 1, "#999999"]);
         attachTodoItem(item1);
         return ["IDLE", time, 1, "#999999"];
     } else {
-        for (var p = 0; p < processList.length; p++) {
-            if ((processList[p][2] < minVal) && (time >= processList[p][1])) {
-                minVal = processList[p][2];
+        for (var p = 0; p < currentAvailable.length; p++) {
+            if (currentAvailable[p][2] < minVal) {
+                minVal = currentAvailable[p][2];
                 minindex = p;
             }
             console.log('kamu');
-            var item1 = createTodoItem(processList[minindex]);
+            var item1 = createTodoItem(currentAvailable[minindex]);
             attachTodoItem(item1);
-            return processList.splice(minindex, 1);
+            return currentAvailable.splice(minindex, 1);
         }
     }
 }
@@ -81,6 +83,7 @@ function nonPreSubmission() {
         //document.getElementById("errors").innerText = "good0.5";
         var shortestJob = nextSJ(processes, timeIndex);
         var cat = shortestJob.join() + " executes at second " + timeIndex.toString();
+        console.log(cat);
         //document.getElementById("errors").innerText = "good1";
         //document.getElementById("testing").appendChild(cat.toString());
         var item = createTodoItem(cat);
@@ -112,10 +115,6 @@ function createTableRow(Process) {
             cell.bgColor = Process[3].toString();
         } else if (k == 4) {
             var button_del = document.createElement('button');
-            // button_del.onclick = deleteRow(this);
-            //button_del.onclick = function(this){
-            //    document.getElementById('para_errorLog').innerHTML = "goog";
-            //}
             button_del.id = "buttoni";
             button_del.innerText = "delete Row";
             var cell = document.createElement('td');
