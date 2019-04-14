@@ -12,7 +12,7 @@ function addToArray() {
 
         var processA = new Process((document.getElementById("input_ProName").value).toString(), parseInt(document.getElementById("input_ProSubTime")
             .value, 10), parseInt(document.getElementById("input_ProBurstTime").value, 10), (document.getElementById("input_ProColor").value).toString());
-        console.log(processA.ProcessName +" "+processA.ProcessColor+" "+processA.SubmissionTime );
+        console.log(processA.ProcessName + " " + processA.ProcessColor + " " + processA.SubmissionTime);
         processes.push(processA);
         console.log(processes);
         var processRow = createTableRow(processA);
@@ -22,15 +22,15 @@ function addToArray() {
         //alert("Process Full");
         document.getElementById("button_Add").disabled = true;
     }
-    for(var yv = 0 ; yv<processes.length;yv++){
-        console.log(typeof(processes[yv]));
+    for (var yv = 0; yv < processes.length; yv++) {
+        console.log(typeof (processes[yv]));
     }
-    
+
 }
 
-function createListItem(value,t) {
+function createListItem(value, t) {
     var item = document.createElement('li');
-    item.innerText = value.ProcessName + " is executed at "+ t.toString();
+    item.innerText = value.ProcessName + " is executed at " + t.toString() + " until " + (t + value.BurstTime).toString();
     return item;
 }
 
@@ -40,7 +40,7 @@ function attachListItem(item) {
 }
 
 function createTableRow(Process) {
-    params = ['ProcessName','SubmissionTime','BurstTime','ProcessColor'];
+    params = ['ProcessName', 'SubmissionTime', 'BurstTime', 'ProcessColor'];
     var row = document.createElement('tr');
     for (var k = 0; k < 5; k++) {
         if (k < 3) {
@@ -105,9 +105,9 @@ function countAvailableProcesses(processList, time) {
     return count;
 }
 
-function createIdleProcesses(processList,time){
+function createIdleProcesses(processList, time) {
     var iterations = 1;
-    while(countAvailableProcesses(processList,time+iterations) == 0){
+    while (countAvailableProcesses(processList, time + iterations) == 0) {
         iterations += 1;
     }
     return iterations;
@@ -144,32 +144,13 @@ function Submission() {
     var timeIndex = 0;
     while (processes.length > 0) {
         var shortestJob = nextSJ(processes, timeIndex);
-        var Listitem = createListItem(shortestJob,timeIndex);
+        shortestJob.calculateTime(timeIndex);
+        var Listitem = createListItem(shortestJob, timeIndex);
         attachListItem(Listitem);
-        var cat = shortestJob.ProcessName + " executes at second " + timeIndex.toString();
+        var cat = shortestJob.ProcessName + " executes at second " + timeIndex.toString()
+            + " until " + (timeIndex + shortestJob.BurstTime).toString();
         console.log(cat);
         timeIndex += shortestJob.BurstTime;
     }
 }
 
-// function logArray(array){
-//     //console.log(array.toString);
-//     for(var x = 0; x<array.length;x++){
-//         console.log("***"+array[x].ProcessName);
-//     };
-// }
-
-function testing(){
-    // for(var y = 0 ; y<processes.length;y++){
-    //     console.log(typeof(processes[y]));
-    // }
-    var a = nextSJ(processes,3);
-    // for(var yi = 0 ; yi< a.length;yi++){
-    //     console.log("typeis "+typeof(a[yi]));}
-     
-    console.log(a);
-    console.log("ewr  "+a.ProcessName);
-    //console.log("rgt  "+a[1].ProcessName);
-    // console.log("ewrgt  "+a[0][0].ProcessName);
-    // console.log("ewrgt  "+a[1][0].ProcessName);
-}
