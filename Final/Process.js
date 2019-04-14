@@ -7,10 +7,8 @@ class Process {
         this.ProcessColor = Color;
     }
 
-    calculateTime(StartTime){
-        this.WaitingTime = StartTime - SubmissionTime;
-        this.TurnAroundTime = WaitingTime + BurstTime;
+    calculateTime(StartTime) {
+        this.WaitingTime = StartTime - this.SubmissionTime;
+        this.TurnAroundTime = this.WaitingTime + this.BurstTime;
     }
-
-
 }
