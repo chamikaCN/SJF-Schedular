@@ -7,7 +7,8 @@
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"> 
         <link rel="stylesheet" href="User.css"> 
     </head>     
-    <body style="display:grid;grid-template-columns:5% 1fr 1fr 5%;grid-template-rows:30px 100px 250px auto 10%;grid-template-areas:'. . . .' '. header header .' '. inputs table .' '. result result .' '. . . .';grid-gap:10px;"> 
+    <body style="display:grid;grid-template-columns:5% 1fr 1fr 5%;grid-template-rows:30px 100px auto auto 10%;
+                    grid-template-areas:'. . . .' '. header header .' '. inputs table .' '. result result .' '. . . .';grid-gap:20px;"> 
         <h1 style="grid-area:2 / 2 / 3 / 4;">Scheduler Project 1.0 </h1> 
         <div style="grid-area:3 / 2 / 4 / 3;"> 
             Number of processes 
@@ -24,8 +25,8 @@
             <br/> 
             <br/> 
             <!-- <div class="btn-group" role="group" id="buttonGroup_Process"> -->             
-            <button class="btn btn-primary" type="button" id="button_Add" disabled="true" onclick="addToArray()"> ADD
-</button>             
+            <button class="btn btn-primary" type="button" id="button_Add" disabled="true" onclick="addToArray()"> ADD</button> 
+            <button class="btn btn-primary" type="button" onclick="Submission()"> Calculate </button>             
             <!-- <button class="btn btn-primary" type="button" id="button_Delete" onclick="deleteFromArray()"> Delete Last Entry </button> -->             
             <br/> 
             <p id="para_errorLog"></p> 
@@ -45,8 +46,7 @@
                     <tbody id="tableBody_Process"> 
 </tbody>                     
                 </table>                 
-            </div>             
-            <button class="btn btn-primary" type="button" onclick="Submission()"> Calculate </button>             
+            </div>                         
         </div>         
         <div id="div_exeList" style="grid-area:4 / 2 / 5 / 4;"> 
             <h3> Order of execution </h3> 

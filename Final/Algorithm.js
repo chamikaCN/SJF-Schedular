@@ -1,5 +1,6 @@
 var processes = [];
 var numberOfProcesses;
+var count =0;
 
 function inputNum() {
     numberOfProcesses = parseInt(document.getElementById("input_NoProcess").value, 10);
@@ -52,12 +53,22 @@ function createTableRow(Process) {
         } else if (k == 4) {
             var button_del = document.createElement('button');
             button_del.id = "buttoni";
+            button_del.addEventListener("click",function() {
+                var cell = this.parentElement;
+                var row = cell.parentElement;
+                console.log(row);
+                var table = row.parentElement;
+                //console.log(table);
+                table.removeChild(row);
+              });
             button_del.innerText = "delete Row";
             var cell = document.createElement('td');
             cell.appendChild(button_del);
         }
         row.appendChild(cell);
     }
+    row.id = count;
+    count =+ 1;
     return row;
 }
 
@@ -65,21 +76,6 @@ function attachTableRow(row) {
     var tableBody = document.getElementById('tableBody_Process');
     tableBody.appendChild(row);
 }
-
-//DELETE ROW METHOD USING EVENT LISTNERS
-
-/*function deleteFromArray() {
-
-    if (processes.length == 0) {
-        document.getElementById("para_errorLog").innerText = "No processes to Delete";
-    } else {
-        processes.pop();
-        console.log(processes);
-        document.getElementById("button_Add").disabled = false;
-        document.getElementById("para_errorLog").innerText = processes.join();
-        //document.getElementById("errors").innerText = processes.length;
-    }
-}*/
 
 function getAvailabeProcesses(processList, time) {
     currentAvailable = [];
