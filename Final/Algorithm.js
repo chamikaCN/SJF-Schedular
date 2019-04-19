@@ -137,10 +137,12 @@ function nextSJ(processList, time) {
 }
 
 function Submission() {
+    var sortedProcesses= [];
     var timeIndex = 0;
     while (processes.length > 0) {
         var shortestJob = nextSJ(processes, timeIndex);
         shortestJob.calculateTime(timeIndex);
+        sortedProcesses.push(shortestJob);
         var Listitem = createListItem(shortestJob, timeIndex);
         attachListItem(Listitem);
         var cat = shortestJob.ProcessName + " executes at second " + timeIndex.toString()
@@ -148,5 +150,22 @@ function Submission() {
         console.log(cat);
         timeIndex += shortestJob.BurstTime;
     }
+    console.log(sortedProcesses);
+    var test = getGraphValueArray(sortedProcesses);
+    console.log(test);
+    plotGraph(test);
 }
 
+function getGraphValueArray(array){
+    var valueArray = [];
+    for (var v = 0; v < array.length;v++){
+        var item = {
+                          "name": array[v].ProcessName,
+                          "startTime": array[v].StartTime,
+                          "endTime": array[v].StartTime + array[v].BurstTime,
+                          "color": array[v].ProcessColor,
+                        }
+        valueArray.push(item);
+    }
+    return valueArray;
+}

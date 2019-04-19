@@ -8,7 +8,8 @@ class Process {
     }
 
     calculateTime(StartTime) {
-        this.WaitingTime = StartTime - this.SubmissionTime;
+        this.StartTime = StartTime;
+        this.WaitingTime = this.StartTime - this.SubmissionTime;
         this.TurnAroundTime = this.WaitingTime + this.BurstTime;
     }
 }
