@@ -2,11 +2,7 @@ var processes = [];
 var numberOfProcesses;
 var count = 0;
 var colourPallete = ["#ff0000","#00ff00","#0000ff","#ffff00","#ff00ff","#00ffff"]
-
 clearInputs(5);
-checkForEmpty("input_ProName");
-checkForEmpty("input_ProSubTime");
-checkForEmpty("input_ProBurstTime");
 
 function clearInputs(clue) {
     document.getElementById("input_ProName").value = "";
@@ -19,31 +15,34 @@ function clearInputs(clue) {
 }
 
 function checkForEmpty(ids) {
+    console.log(ids);
     for (var i = 0; i < ids.length; i++) {
         if (document.getElementById(ids[i]).value == "") {
-            console.log("qwerty");
             return false;
         }
-        return true;
+
     }
+    return true;
 }
 
 function inputNum() {
-    numberOfProcesses = parseInt(document.getElementById("input_NoProcess").value, 10);
-    document.getElementById("button_Add").disabled = false;
+    if (checkForEmpty(["input_NoProcess"])) {
+        numberOfProcesses = parseInt(document.getElementById("input_NoProcess").value, 10);
+        document.getElementById("button_Add").disabled = false;
+    }
 }
 
 function addToArray() {
     if (processes.length < numberOfProcesses) {
-        if (checkForEmpty(["input_ProName", "input_ProBurstTime", "input_SubTime"])) {
+        if (checkForEmpty(["input_ProName", "input_ProBurstTime", "input_ProSubTime"])) {
             var processA = new Process((document.getElementById("input_ProName").value).toString(), parseInt(document.getElementById("input_ProSubTime")
                 .value, 10), parseInt(document.getElementById("input_ProBurstTime").value, 10), (document.getElementById("input_ProColor").value).toString());
             processes.push(processA);
             var processRow = createTableRow(processA);
             attachTableRow(processRow);
             clearInputs(4);
-        } else { 
-            document.getElementById("para_errorLog").innerText = "fill all correctly"; 
+        } else {
+            document.getElementById("para_errorLog").innerText = "fill all correctly";
         }
     } else {
         document.getElementById("para_errorLog").innerText = "Process Full";
@@ -56,12 +55,10 @@ function pickNewColour(colorArray) {
 
     if (colorArray.length > 0) {
         var number = Math.floor(Math.random() * (colorArray.length));
-        console.log(number);
         var color = colorArray.splice(number, 1);
-        console.log(color);
         return color;
     } else {
-        return "#9d2525"
+        return "#9d2525";
     }
 }
 
@@ -88,13 +85,18 @@ function createTableRow(Process) {
             cell.bgColor = Process.ProcessColor.toString();
         } else if (k == 4) {
             var button_del = document.createElement('button');
-            button_del.id = "buttoni";
+            button_del.id = "buttonDel";
+            button_del.className = "btn btn-primary"
             button_del.addEventListener("click", function () {
                 var cell = this.parentElement;
-                var row = cell.parentElement;
-                var table = row.parentElement;
-                //console.log(table);
-                table.removeChild(row);
+                var row1 = cell.parentElement;
+                var table = row1.parentElement;
+                for(var n = 0;n<processes.length;n++){
+                    if(row1.childNodes[0].innerText==processes[n].ProcessName){
+                        processes.splice(n,1);
+                    }
+                }
+                table.removeChild(row1);
             });
             button_del.innerText = "delete Row";
             var cell = document.createElement('td');
