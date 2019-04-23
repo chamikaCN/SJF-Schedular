@@ -1,7 +1,7 @@
 var processes = [];
 var numberOfProcesses;
 var count = 0;
-var colourPallete = ["#ff0000","#00ff00","#0000ff","#ffff00","#ff00ff","#00ffff"]
+var colourPallete = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff"]
 clearInputs(5);
 
 function clearInputs(clue) {
@@ -25,22 +25,36 @@ function checkForEmpty(ids) {
     return true;
 }
 
+function checkSameName(processList, name) {
+    for (var m = 0; m < processList.length; m++) {
+        if (name == processList[m].ProcessName) {
+            return false;
+        }
+    }
+    return true;
+}
+
 function inputNum() {
     if (checkForEmpty(["input_NoProcess"])) {
         numberOfProcesses = parseInt(document.getElementById("input_NoProcess").value, 10);
         document.getElementById("button_Add").disabled = false;
+        document.getElementById("button_OK").disabled = true;
     }
 }
 
 function addToArray() {
     if (processes.length < numberOfProcesses) {
         if (checkForEmpty(["input_ProName", "input_ProBurstTime", "input_ProSubTime"])) {
-            var processA = new Process((document.getElementById("input_ProName").value).toString(), parseInt(document.getElementById("input_ProSubTime")
-                .value, 10), parseInt(document.getElementById("input_ProBurstTime").value, 10), (document.getElementById("input_ProColor").value).toString());
-            processes.push(processA);
-            var processRow = createTableRow(processA);
-            attachTableRow(processRow);
-            clearInputs(4);
+            if (checkSameName(processes, document.getElementById("input_ProName").value)) {
+                var processA = new Process((document.getElementById("input_ProName").value).toString(), parseInt(document.getElementById("input_ProSubTime")
+                    .value, 10), parseInt(document.getElementById("input_ProBurstTime").value, 10), (document.getElementById("input_ProColor").value).toString());
+                processes.push(processA);
+                var processRow = createTableRow(processA);
+                attachTableRow(processRow);
+                clearInputs(4);
+            } else {
+                document.getElementById("para_errorLog").innerText = "Process name should be same";
+            }
         } else {
             document.getElementById("para_errorLog").innerText = "fill all correctly";
         }
@@ -52,7 +66,6 @@ function addToArray() {
 }
 
 function pickNewColour(colorArray) {
-
     if (colorArray.length > 0) {
         var number = Math.floor(Math.random() * (colorArray.length));
         var color = colorArray.splice(number, 1);
@@ -79,9 +92,14 @@ function createTableRow(Process) {
     for (var k = 0; k < 5; k++) {
         if (k < 3) {
             var cell = document.createElement('td');
+            cell.className = "tablecell";
             cell.innerText = Process[params[k]];
         } else if (k == 3) {
             var cell = document.createElement('td');
+            // var tilde = " ~ ";
+            // cell.innerText = tilde.fontcolor(Process.ProcessColor.toString());
+            cell.className = "tablecell";
+            cell.id = "tableColorcell";
             cell.bgColor = Process.ProcessColor.toString();
         } else if (k == 4) {
             var button_del = document.createElement('button');
@@ -91,15 +109,16 @@ function createTableRow(Process) {
                 var cell = this.parentElement;
                 var row1 = cell.parentElement;
                 var table = row1.parentElement;
-                for(var n = 0;n<processes.length;n++){
-                    if(row1.childNodes[0].innerText==processes[n].ProcessName){
-                        processes.splice(n,1);
+                for (var n = 0; n < processes.length; n++) {
+                    if (row1.childNodes[0].innerText == processes[n].ProcessName) {
+                        processes.splice(n, 1);
                     }
                 }
                 table.removeChild(row1);
             });
             button_del.innerText = "delete Row";
             var cell = document.createElement('td');
+            cell.className = "tablecell";
             cell.appendChild(button_del);
         }
         row.appendChild(cell);
@@ -163,7 +182,6 @@ function nextSJ(processList, time) {
             processList.push(available[z]);
         }
         return SJ[0];
-
     } else {
         var newIdleTime = createIdleProcesses(processList, time);
         var newProcess = new Process("IDLE", time, newIdleTime, "#999999");
@@ -187,6 +205,7 @@ function Submission() {
     }
     var test = getGraphValueArray(sortedProcesses);
     plotGraph(test);
+    document.getElementById("button_OK").disabled = false;
 }
 
 function getGraphValueArray(array) {

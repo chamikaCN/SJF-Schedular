@@ -43,5 +43,20 @@ table#table_Process thead {
 }
 
 table#table_Process tbody#tableBody_Process {
-    background-color: rgba(117, 129, 161, 0);
+    background-color: #7395ae;
+    font-size: 25px;
+    text-align: center;
+}
+
+p#para_errorLog {
+    margin: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #ca5a2f;
+    font-size: 20px;
+    text-decoration: overline;
+}
+
+#tableColorcell {
+    padding: 5px ;
 }
