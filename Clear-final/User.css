@@ -59,4 +59,10 @@ p#para_errorLog {
 
 #tableColorcell {
     padding: 5px ;
+    border: rgba(0, 0, 0, 0);
+    border-width: 10px;
+}
+
+h5 {
+    color: #191970;
 }

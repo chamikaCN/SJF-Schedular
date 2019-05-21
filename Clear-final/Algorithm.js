@@ -1,7 +1,7 @@
 var processes = [];
 var numberOfProcesses;
 var count = 0;
-var colourPallete = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff"]
+var colourPallete = ['#e6194b', '#3cb44b', "#c5919d", "#df6e21", "#472426", "#fbaf08", "#101357", "#bf4aa8"]
 clearInputs(5);
 
 function clearInputs(clue) {
@@ -15,7 +15,6 @@ function clearInputs(clue) {
 }
 
 function checkForEmpty(ids) {
-    console.log(ids);
     for (var i = 0; i < ids.length; i++) {
         if (document.getElementById(ids[i]).value == "") {
             return false;
@@ -52,16 +51,17 @@ function addToArray() {
                 var processRow = createTableRow(processA);
                 attachTableRow(processRow);
                 clearInputs(4);
+                if (processes.length == numberOfProcesses) {
+                    document.getElementById("button_Add").disabled = true;
+                }
             } else {
-                document.getElementById("para_errorLog").innerText = "Process name should be same";
+                document.getElementById("para_errorLog").innerText = "Process name should not be same";
             }
         } else {
             document.getElementById("para_errorLog").innerText = "fill all correctly";
         }
     } else {
         document.getElementById("para_errorLog").innerText = "Process Full";
-        //alert("Process Full");
-        document.getElementById("button_Add").disabled = true;
     }
 }
 
@@ -96,8 +96,6 @@ function createTableRow(Process) {
             cell.innerText = Process[params[k]];
         } else if (k == 3) {
             var cell = document.createElement('td');
-            // var tilde = " ~ ";
-            // cell.innerText = tilde.fontcolor(Process.ProcessColor.toString());
             cell.className = "tablecell";
             cell.id = "tableColorcell";
             cell.bgColor = Process.ProcessColor.toString();
@@ -115,6 +113,7 @@ function createTableRow(Process) {
                     }
                 }
                 table.removeChild(row1);
+                document.getElementById("button_Add").disabled = false;
             });
             button_del.innerText = "delete Row";
             var cell = document.createElement('td');
@@ -193,6 +192,7 @@ function nextSJ(processList, time) {
 function Submission() {
     var sortedProcesses = [];
     var timeIndex = 0;
+    document.getElementById("h3_exeList").innerText = "Order of execution"; 
     while (processes.length > 0) {
         var shortestJob = nextSJ(processes, timeIndex);
         shortestJob.calculateTime(timeIndex);
@@ -204,6 +204,7 @@ function Submission() {
         timeIndex += shortestJob.BurstTime;
     }
     var test = getGraphValueArray(sortedProcesses);
+    displayCalculatedTimes(sortedProcesses);
     plotGraph(test);
     document.getElementById("button_OK").disabled = false;
 }
@@ -220,4 +221,20 @@ function getGraphValueArray(array) {
         valueArray.push(item);
     }
     return valueArray;
+}
+
+function displayCalculatedTimes(array){
+    var TotTurnaround = 0;
+    var TotWaiting = 0;
+    var number = 0 
+    for (var w = 0; w < array.length; w++) {
+        if (array[w].ProcessName != "IDLE"){
+        TotTurnaround = TotTurnaround + array[w].TurnAroundTime;
+        TotWaiting = TotWaiting + array[w].WaitingTime;
+        number = number + 1;
+        }
+    }
+    document.getElementById("h5_turnaround").innerText = "Average Turnaround Time : " + TotTurnaround/number;
+    document.getElementById("h5_waiting").innerText = "Average Waiting Time : " + TotWaiting/number;
+
 }
