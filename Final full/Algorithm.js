@@ -13,9 +13,7 @@ function addToArray() {
 
         var processA = new Process((document.getElementById("input_ProName").value).toString(), parseInt(document.getElementById("input_ProSubTime")
             .value, 10), parseInt(document.getElementById("input_ProBurstTime").value, 10), (document.getElementById("input_ProColor").value).toString());
-        console.log(processA.ProcessName + " " + processA.ProcessColor + " " + processA.SubmissionTime);
         processes.push(processA);
-        console.log(processes);
         var processRow = createTableRow(processA);
         attachTableRow(processRow);
     } else {
@@ -23,9 +21,7 @@ function addToArray() {
         //alert("Process Full");
         document.getElementById("button_Add").disabled = true;
     }
-    for (var yv = 0; yv < processes.length; yv++) {
-        console.log(typeof (processes[yv]));
-    }
+
 
 }
 
@@ -113,7 +109,6 @@ function nextSJ(processList, time) {
     var minindex;
     var minVal = 10000000;
     var available = getAvailabeProcesses(processList, time);
-    console.log(available.length);
     if (available.length > 0) {
         for (var p = 0; p < available.length; p++) {
             if (available[p].BurstTime < minVal) {
@@ -147,12 +142,9 @@ function Submission() {
         attachListItem(Listitem);
         var cat = shortestJob.ProcessName + " executes at second " + timeIndex.toString()
             + " until " + (timeIndex + shortestJob.BurstTime).toString();
-        console.log(cat);
         timeIndex += shortestJob.BurstTime;
     }
-    console.log(sortedProcesses);
     var test = getGraphValueArray(sortedProcesses);
-    console.log(test);
     plotGraph(test);
 }
 

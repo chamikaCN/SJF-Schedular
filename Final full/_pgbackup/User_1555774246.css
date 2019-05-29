@@ -1,0 +1,20 @@
+h1.topic {
+    font-family: Autour One;
+    font-variant: small-caps;
+    text-align: center;
+    font-size: 50px;
+    font-weight: 900;
+}
+
+div.info {
+    font-family: Autour One;
+}
+
+div.exeList {
+    font-family: Autour One;
+}
+
+body {
+    background-image: url('Schedular%20back.png');
+    color: #fada5e;
+}
